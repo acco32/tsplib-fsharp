@@ -4,6 +4,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Types.fs" />
-    <Compile Include="TSPLIB.fs" />
+    <Compile Include="TravelingSalesman.fs" />
   </ItemGroup>
 </Project>
