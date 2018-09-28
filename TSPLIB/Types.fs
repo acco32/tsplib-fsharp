@@ -1,40 +1,60 @@
 module TSPLIB.Types
 
 
-type ProblemDataType = {
-  Name: string
-}
+type private ProblemType = ProblemType of string
+let private TravelingSalesman = ProblemType "TSP"
+let private AsymetricTravelingSalesman = ProblemType "ATSP"
+let private SequentialOrdering = ProblemType "SOP"
+let private HamiltonianCycle = ProblemType "HCP"
+let private CapacitatedVehicleRouting = ProblemType "CVRP"
+let private Tour = ProblemType "TOUR"
 
-let TravelingSalemanProblem : ProblemDataType = {Name="TSP"}
-let AsymetricTravelingSalemanProblem : ProblemDataType = {Name="ATSP"}
-let SequentialOrderingProblem : ProblemDataType = {Name="SOP"}
-let HamiltonianCycleProblem : ProblemDataType = {Name="HCP"}
-let CapacitatedVehicleRoutingProblem : ProblemDataType = {Name="CVRP"}
-let Tour : ProblemDataType = {Name="TOUR"}
+type Problem =
+  | TravelingSalesman
+  | AsymetricTravelingSalesman
+  | SequentialOrdering
+  | HamiltonianCycle
+  | CapacitatedVehicleRouting
+  | Tour
+
+type private EdgeWeightType = EdgeWeightType of string
+
+let private Explicit = EdgeWeightType "Explicit"
+let private Euclidian2D = EdgeWeightType "EUC_2D"
+let private Euclidian3D = EdgeWeightType "EUC_3D"
+let private Maximum2D = EdgeWeightType "MAX_2D"
+let private Maximum3D = EdgeWeightType "MAX_3D"
+let private Manhattan2D = EdgeWeightType "MAN_2D"
+let private Manhattan3D = EdgeWeightType "MAN_3D"
+
+let private EuclidianRoundUp2D = EdgeWeightType "CEIL_2D"
+let private Geographical = EdgeWeightType "GEO"
+let private ATT = EdgeWeightType "ATT"
+
+let private CrystallographyV1 = EdgeWeightType "XRAY1"
+let private CrystallographyV2 = EdgeWeightType "XRAY2"
+let private Special = EdgeWeightType "SPECIAL"
 
 
-type EdgeWeight = {
-  Name: string
-}
-
-let Explicit : EdgeWeight = {Name="Explicit"}
-let Euclidian2D : EdgeWeight = {Name="EUC_2D"}
-let Euclidian3D : EdgeWeight = {Name="EUC_3D"}
-let Maximum2D : EdgeWeight = {Name="MAX_2D"}
-let Maximum3D : EdgeWeight = {Name="MAX_3D"}
-let Manhattan2D : EdgeWeight = {Name="MAN_2D"}
-let Manhattan3D : EdgeWeight = {Name="MAN_3D"}
-let EuclidianRoundUp2D : EdgeWeight = {Name="CEIL_2D"}
-let Geographical : EdgeWeight = {Name="GEO"}
-let ATT : EdgeWeight = {Name="ATT"}
-let CrystallographyV1 : EdgeWeight = {Name="XRAY1"}
-let CrystallographyV2 : EdgeWeight = {Name="XRAY2"}
-let Special : EdgeWeight = {Name="SPECIAL"}
+type EdgeWeight =
+  | Explicit
+  | Euclidian2D
+  | Euclidian3D
+  | Maximum2D
+  | Maximum3D
+  | Manhattan2D
+  | Manhattan3D
+  | EuclidianRoundUp2D
+  | Geographical
+  | ATT
+  | CrystallographyV1
+  | CrystallographyV2
+  | Special
 
 
 type Tsp = {
   Name: string;
-  Type: ProblemDataType;
+  Type: Problem;
   Comments: string list;
   Dimension: int;
   Capacity: int option;

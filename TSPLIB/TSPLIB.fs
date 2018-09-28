@@ -5,7 +5,7 @@ open TSPLIB.Types
 let createTsp =
   {
     Name = "string.Empty";
-    Type =TravelingSalemanProblem;
+    Type = TravelingSalesman;
     Comments = [];
     Dimension = -1;
     Capacity = None;
