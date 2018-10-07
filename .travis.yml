@@ -13,4 +13,4 @@ matrix:
 
 script:
   - dotnet build
-  - dotnet test
+  - dotnet test TSPLIB.Tests
