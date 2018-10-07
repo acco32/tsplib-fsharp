@@ -8,7 +8,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="data/data.tsp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Compile Include="TravelingSalesman.fs" />
+    <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />

@@ -3,67 +3,48 @@ namespace TSPLIB
 
 module Types =
 
-  type private ProblemType = ProblemType of string
-  let private TravelingSalesman = ProblemType "TSP"
-  let private AsymetricTravelingSalesman = ProblemType "ATSP"
-  let private SequentialOrdering = ProblemType "SOP"
-  let private HamiltonianCycle = ProblemType "HCP"
-  let private CapacitatedVehicleRouting = ProblemType "CVRP"
-  let private Tour = ProblemType "TOUR"
-
-  type Problem =
-    | TravelingSalesman
-    | AsymetricTravelingSalesman
-    | SequentialOrdering
-    | HamiltonianCycle
-    | CapacitatedVehicleRouting
-    | Tour
-
-  type private EdgeWeightType = EdgeWeightType of string
-
-  let private Explicit = EdgeWeightType "Explicit"
-  let private Euclidian2D = EdgeWeightType "EUC_2D"
-  let private Euclidian3D = EdgeWeightType "EUC_3D"
-  let private Maximum2D = EdgeWeightType "MAX_2D"
-  let private Maximum3D = EdgeWeightType "MAX_3D"
-  let private Manhattan2D = EdgeWeightType "MAN_2D"
-  let private Manhattan3D = EdgeWeightType "MAN_3D"
-
-  let private EuclidianRoundUp2D = EdgeWeightType "CEIL_2D"
-  let private Geographical = EdgeWeightType "GEO"
-  let private ATT = EdgeWeightType "ATT"
-
-  let private CrystallographyV1 = EdgeWeightType "XRAY1"
-  let private CrystallographyV2 = EdgeWeightType "XRAY2"
-  let private Special = EdgeWeightType "SPECIAL"
+  type Problem = private Problem of string
+    with
+    static member Name (Problem pt) = pt
 
 
-  type EdgeWeight =
-    | Explicit
-    | Euclidian2D
-    | Euclidian3D
-    | Maximum2D
-    | Maximum3D
-    | Manhattan2D
-    | Manhattan3D
-    | EuclidianRoundUp2D
-    | Geographical
-    | ATT
-    | CrystallographyV1
-    | CrystallographyV2
-    | Special
+  let TravelingSalesman = Problem "TSP"
+  let AsymetricTravelingSalesman = Problem "ATSP"
+  let SequentialOrdering = Problem "SOP"
+  let HamiltonianCycle = Problem "HCP"
+  let CapacitatedVehicleRouting = Problem "CVRP"
+  let Tour = Problem "TOUR"
+  let Unknown = Problem "UNKNOWN"
+
+  type EdgeWeight = private EdgeWeight of string
+    with
+    static member Name (EdgeWeight ew) = ew
+
+  let Explicit = EdgeWeight "Explicit"
+  let Euclidian2D = EdgeWeight "EUC_2D"
+  let Euclidian3D = EdgeWeight "EUC_3D"
+  let Maximum2D = EdgeWeight "MAX_2D"
+  let Maximum3D = EdgeWeight "MAX_3D"
+  let Manhattan2D = EdgeWeight "MAN_2D"
+  let Manhattan3D = EdgeWeight "MAN_3D"
+
+  let EuclidianRoundUp2D = EdgeWeight "CEIL_2D"
+  let Geographical = EdgeWeight "GEO"
+  let ATT = EdgeWeight "ATT"
+
+  let CrystallographyV1 = EdgeWeight "XRAY1"
+  let CrystallographyV2 = EdgeWeight "XRAY2"
+  let Special = EdgeWeight "SPECIAL"
 
 
-  type private NodeCoordinateFormatType = NodeCoordinateFormatType of string
+  type NodeCoordinateFormat = private NodeCoordinateFormat of string
+    with
+    static member Name (NodeCoordinateFormat ncf) = ncf
 
-  let private TwoDimensional = NodeCoordinateFormatType "TWOD_COORDS"
-  let private ThreeDimensional = NodeCoordinateFormatType "THREED_COORDS"
-  let private NoCoordinates = NodeCoordinateFormatType "NO_COORDS"
+  let TwoDimensional = NodeCoordinateFormat "TWOD_COORDS"
+  let ThreeDimensional = NodeCoordinateFormat "THREED_COORDS"
+  let NoCoordinates = NodeCoordinateFormat "NO_COORDS"
 
-  type NodeCoordinateFormat =
-    | TwoDimensional
-    | ThreeDimensional
-    | NoFormat
 
   type NodeCoordinate =
     | TwoDimensional of float * float
@@ -76,7 +57,7 @@ module Types =
     Type: Problem;
     Comments: string list;
     Dimension: int;
-    EdgeWeight: EdgeWeight;
+    EdgeWeightType: EdgeWeight;
     NodeFormat: NodeCoordinateFormat;
     NodeCoordinates: NodeCoordinate list;
   }
