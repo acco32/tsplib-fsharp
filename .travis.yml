@@ -1,5 +1,5 @@
 sudo: required
-language: fsharp
+language: csharp
 solution: TSPLIB.sln
 dotnet: 2.1.403
 mono: none
