@@ -47,14 +47,12 @@ module Types =
 
 
   type NodeCoordinate =
-    | TwoDimensional of float * float
-    | ThreeDimensional of float * float * float
-    | LabeledTwoDimensional of string * float * float
-    | LabeledThreeDimensional of string * float * float * float
+    | TwoDimension of float * float
+    | ThreeDimension of float * float * float
 
   type Tsp = {
     Name: string;
-    Type: Problem;
+    ProblemType: Problem;
     Comments: string list;
     Dimension: int;
     EdgeWeightType: EdgeWeight;

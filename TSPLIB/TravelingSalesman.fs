@@ -2,13 +2,14 @@ namespace TSPLIB
 
 open System.IO
 open Types
+open System.Text
 
 module TravelingSalesman =
 
   let DefaultTsp =
     {
       Name = "";
-      Type = TravelingSalesman;
+      ProblemType = TravelingSalesman;
       Comments = [];
       Dimension = 0;
       EdgeWeightType = Euclidian2D;
@@ -23,21 +24,24 @@ module TravelingSalesman =
     let newComments = List.append tsp.Comments [comment]
     {tsp with Comments = newComments}
 
-  let Type (problemType:Problem) (tsp: Tsp) =
-    {tsp with Type = problemType}
-
-  let Dimension (dim:int) (tsp:Tsp) =
-    {tsp with Dimension=dim}
+  let ProblemType (problemType:Problem) (tsp: Tsp) =
+    {tsp with ProblemType = problemType}
 
   let EdgeWeightType (edgeWeight:EdgeWeight) (tsp:Tsp) =
-    {tsp with EdgeWeightType=edgeWeight}
+    {tsp with EdgeWeightType = edgeWeight}
 
   let NodeFormat (coordType:NodeCoordinateFormat) (tsp:Tsp) =
     {tsp with NodeFormat = coordType}
 
-  let Coordinates (coord:NodeCoordinate) (tsp:Tsp) =
-    let newCoordinates = List.append tsp.NodeCoordinates [coord]
-    {tsp with NodeCoordinates=newCoordinates}
+  let Coordinate (s: float list) (tsp:Tsp) =
+
+    match tsp.NodeFormat with
+    | TwoDimensional ->
+        let newCoordinates = List.append tsp.NodeCoordinates [TwoDimension(s.[0], s.[1])]
+        {tsp with NodeCoordinates=newCoordinates; Dimension=newCoordinates.Length}
+    | ThreeDimensional ->
+        let newCoordinates = List.append tsp.NodeCoordinates [ThreeDimension(s.[0], s.[1], s.[2])]
+        {tsp with NodeCoordinates=newCoordinates; Dimension=newCoordinates.Length}
 
 
   let ReadTspFile (filename:string) : Tsp =
@@ -121,8 +125,8 @@ module TravelingSalesman =
             match k with
             | "NAME" -> tsp <- tsp |> Name v
             | "COMMENT" ->  tsp <- tsp |> Comment v
-            | "TYPE" -> tsp <- tsp |> Type (parseProblemType v)
-            | "DIMENSION" -> tsp <- tsp |> Dimension (parseProblemDimension v)
+            | "TYPE" -> tsp <- tsp |> ProblemType (parseProblemType v)
+            | "DIMENSION" -> ()
             | "NODE_COORD_TYPE" -> tsp <- tsp |> NodeFormat (parseCoordFormat v)
             | "EDGE_WEIGHT_TYPE" -> tsp <- tsp |> EdgeWeightType (parseEdgeWeight v)
             | _ -> ()
@@ -135,9 +139,42 @@ module TravelingSalesman =
             | "NODE_COORD_SECTION" | "EOF" -> ()
             | _ ->
               let data = x.Split(' ')
-              tsp <- tsp |> Coordinates (LabeledTwoDimensional (data.[0], float(data.[1]), float(data.[2])))
+              match tsp.NodeFormat with
+              | TwoDimensional ->
+                  tsp <- tsp |> Coordinate [float(data.[1]); float(data.[2])]
+              | ThreeDimensional ->
+                  tsp <- tsp |> Coordinate [float(data.[1]); float(data.[2]); float(data.[3])]
 
      )
 
-    tsp
+    {tsp with Dimension = tsp.NodeCoordinates.Length}
+
+  let WriteTspFile (filename:string) (tsp:Tsp)  =
+    use file = new StreamWriter(filename, true)
+
+    fprintfn file "NAME: %s" tsp.Name
+    List.iter (fun (x:string) -> fprintfn file "COMMENT: %s" x) tsp.Comments
+    fprintfn file "TYPE: %s" (Problem.Name tsp.ProblemType)
+    fprintfn file "DIMENSION: %i" tsp.Dimension
+    fprintfn file "NODE_COORD_TYPE: %s" (NodeCoordinateFormat.Name tsp.NodeFormat)
+    fprintfn file "EDGE_WEIGHT_TYPE: %s" (EdgeWeight.Name tsp.EdgeWeightType)
+
+    fprintfn file "NODE_COORD_SECTION"
+    List.iteri (
+      fun idx (coord:NodeCoordinate) ->
+
+        match coord with
+        | TwoDimension(x,y) ->
+            fprintfn file "%i %f %f" (idx+1) x y
+        | ThreeDimension(x,y,z) ->
+            fprintfn file "%i %f %f %f" (idx+1) x y z
+
+      ) (tsp.NodeCoordinates)
+    fprintf file "EOF"
+
+    file.Flush()
+
+    file.BaseStream.Length
+
+
 
