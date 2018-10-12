@@ -42,7 +42,8 @@ module TravelingSalesman =
     | n when n=3 ->
         let newCoordinates = List.append tsp.NodeCoordinates [ThreeDimension(coord.[0], coord.[1], coord.[2])]
         {tsp with NodeCoordinates=newCoordinates; Dimension=newCoordinates.Length}
-
+    | _ ->
+        failwith "Invalid Coordinate Length"
 
   let ReadTspFile (filename:string) : Tsp =
     match filename with
@@ -139,20 +140,8 @@ module TravelingSalesman =
             | "NODE_COORD_SECTION" | "EOF" -> ()
             | _ ->
               let data = Regex.Replace(x.Trim(), @"\s+", " ").Split(' ')
-
-              match data.Length with
-              | n when n=3 ->
-                  tsp <- tsp |> Coordinate [float(data.[1]); float(data.[2])]
-              | n when n=4 ->
-                  tsp <- tsp |> Coordinate [float(data.[1]); float(data.[2]); float(data.[3])]
-              | _ -> ()
-
-              // if tsp.NodeFormat = TwoDimensional then
-              //   tsp <- tsp |> Coordinate [float(data.[1]); float(data.[2])]
-              // elif tsp.NodeFormat = ThreeDimensional then
-              //   tsp <- tsp |> Coordinate [float(data.[1]); float(data.[2]); float(data.[3])]
-              // else
-              //   ()
+              let s = List.map (fun c -> float(c)) (Array.toList data.[1..])
+              tsp <- tsp |> Coordinate s
      )
 
     {tsp with Dimension = tsp.NodeCoordinates.Length}
@@ -164,7 +153,10 @@ module TravelingSalesman =
     List.iter (fun (x:string) -> fprintfn file "COMMENT: %s" x) tsp.Comments
     fprintfn file "TYPE: %s" (Problem.Name tsp.ProblemType)
     fprintfn file "DIMENSION: %i" tsp.Dimension
-    fprintfn file "NODE_COORD_TYPE: %s" (NodeCoordinateFormat.Name tsp.NodeFormat)
+
+    if tsp.NodeFormat <> NoCoordinates then
+      fprintfn file "NODE_COORD_TYPE: %s" (NodeCoordinateFormat.Name tsp.NodeFormat)
+
     fprintfn file "EDGE_WEIGHT_TYPE: %s" (EdgeWeight.Name tsp.EdgeWeightType)
 
     fprintfn file "NODE_COORD_SECTION"

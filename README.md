@@ -25,6 +25,12 @@ modelOut |> WriteTspFile output
 
 ```
 
+## Other DotNet Libraries
+
+https://github.com/pdrozdowski/TSPLib.Net
+
+
 ## Links
 
+https://wwwproxy.iwr.uni-heidelberg.de/groups/comopt/software/TSPLIB95/
 https://en.wikipedia.org/wiki/Lin%E2%80%93Kernighan_heuristic  

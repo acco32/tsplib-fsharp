@@ -98,7 +98,6 @@ module Tests =
       |> Comment "Some comment"
       |> ProblemType TravelingSalesman
       |> EdgeWeightType Euclidian3D
-      |> NodeFormat ThreeDimensional
       |> Coordinate [0.0; 0.0; 0.0]
       |> Coordinate [0.0; 0.5; 2.0]
       |> Coordinate [0.0; 1.0; 1.1]
