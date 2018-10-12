@@ -2,7 +2,7 @@ namespace TSPLIB
 
 open System.IO
 open Types
-open System.Text
+open System.Text.RegularExpressions
 
 module TravelingSalesman =
 
@@ -33,14 +33,14 @@ module TravelingSalesman =
   let NodeFormat (coordType:NodeCoordinateFormat) (tsp:Tsp) =
     {tsp with NodeFormat = coordType}
 
-  let Coordinate (s: float list) (tsp:Tsp) =
+  let Coordinate (coord: float list) (tsp:Tsp) =
 
-    match tsp.NodeFormat with
-    | TwoDimensional ->
-        let newCoordinates = List.append tsp.NodeCoordinates [TwoDimension(s.[0], s.[1])]
+    match coord.Length with
+    | n when n=2 ->
+        let newCoordinates = List.append tsp.NodeCoordinates [TwoDimension(coord.[0], coord.[1])]
         {tsp with NodeCoordinates=newCoordinates; Dimension=newCoordinates.Length}
-    | ThreeDimensional ->
-        let newCoordinates = List.append tsp.NodeCoordinates [ThreeDimension(s.[0], s.[1], s.[2])]
+    | n when n=3 ->
+        let newCoordinates = List.append tsp.NodeCoordinates [ThreeDimension(coord.[0], coord.[1], coord.[2])]
         {tsp with NodeCoordinates=newCoordinates; Dimension=newCoordinates.Length}
 
 
@@ -138,19 +138,27 @@ module TravelingSalesman =
             match k with
             | "NODE_COORD_SECTION" | "EOF" -> ()
             | _ ->
-              let data = x.Split(' ')
-              match tsp.NodeFormat with
-              | TwoDimensional ->
-                  tsp <- tsp |> Coordinate [float(data.[1]); float(data.[2])]
-              | ThreeDimensional ->
-                  tsp <- tsp |> Coordinate [float(data.[1]); float(data.[2]); float(data.[3])]
+              let data = Regex.Replace(x.Trim(), @"\s+", " ").Split(' ')
 
+              match data.Length with
+              | n when n=3 ->
+                  tsp <- tsp |> Coordinate [float(data.[1]); float(data.[2])]
+              | n when n=4 ->
+                  tsp <- tsp |> Coordinate [float(data.[1]); float(data.[2]); float(data.[3])]
+              | _ -> ()
+
+              // if tsp.NodeFormat = TwoDimensional then
+              //   tsp <- tsp |> Coordinate [float(data.[1]); float(data.[2])]
+              // elif tsp.NodeFormat = ThreeDimensional then
+              //   tsp <- tsp |> Coordinate [float(data.[1]); float(data.[2]); float(data.[3])]
+              // else
+              //   ()
      )
 
     {tsp with Dimension = tsp.NodeCoordinates.Length}
 
   let WriteTspFile (filename:string) (tsp:Tsp)  =
-    use file = new StreamWriter(filename, true)
+    use file = new StreamWriter(filename)
 
     fprintfn file "NAME: %s" tsp.Name
     List.iter (fun (x:string) -> fprintfn file "COMMENT: %s" x) tsp.Comments
@@ -175,6 +183,3 @@ module TravelingSalesman =
     file.Flush()
 
     file.BaseStream.Length
-
-
-
