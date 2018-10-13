@@ -5,6 +5,9 @@
 Permits the reading and writing of TSPLIB formats that can be solved by [LKH](http://akira.ruc.dk/~keld/research/LKH-3/) solver.
 
 
+## Supported Problem Types
+- Traveling Salesman
+
 ## Example
 Write Traveling Salesman Model to `data.tsp`
 ```fsharp
@@ -32,5 +35,6 @@ https://github.com/pdrozdowski/TSPLib.Net
 
 ## Links
 
-https://wwwproxy.iwr.uni-heidelberg.de/groups/comopt/software/TSPLIB95/
+http://elib.zib.de/pub/mp-testdata/tsp/tsplib/tsplib.html  
+https://wwwproxy.iwr.uni-heidelberg.de/groups/comopt/software/TSPLIB95/  
 https://en.wikipedia.org/wiki/Lin%E2%80%93Kernighan_heuristic  

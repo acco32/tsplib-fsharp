@@ -60,3 +60,49 @@ module Types =
     NodeCoordinates: NodeCoordinate list;
   }
 
+  type EdgeWeightFormat = private EdgeWeightFormat of string
+    with
+    static member Name (EdgeWeightFormat ewf) = ewf
+
+  let Function = EdgeWeightFormat "FUNCTION"
+  let FullMatrix = EdgeWeightFormat "FULL_MATRIX"
+  let UpperRow = EdgeWeightFormat "UPPER_ROW"
+  let LowerRow = EdgeWeightFormat "LOWER_ROW"
+  let UpperDiagonalRow = EdgeWeightFormat "UPPER_DIAG_ROW"
+  let LowerDiagonalRow = EdgeWeightFormat "LOWER_DIAG_ROW"
+  let UpperColumn = EdgeWeightFormat "UPPER_COL"
+  let LowerColumn = EdgeWeightFormat "LOWER_COL"
+  let UpperDiagonalColumn = EdgeWeightFormat "UPPER_DIAG_COL"
+  let LowerDiagonalColumn = EdgeWeightFormat "LOWER_DIAG_COL"
+
+
+  type EdgeDataFormat = private EdgeDataFormat of string
+    with
+    static member Name (EdgeDataFormat edf) = edf
+
+  let EdgeList = EdgeDataFormat "EDGE_LIST"
+  let AdjacencyList = EdgeDataFormat "ADJ_LIST"
+
+  type DisplayData = private DisplayData of string
+    with
+    static member Name (DisplayData dd) = dd
+
+  let CoordinateDisplay = DisplayData "COORD_DISPLAY"
+  let TwoDimensionalDisplay = DisplayData "TWOD_DISPLAY"
+  let NoDisplay = DisplayData "NO_DISPLAY"
+
+  type Vrp = {
+    Name: string;
+    ProblemType: Problem;
+    Comments: string list;
+    Dimension: int;
+    EdgeWeightType: EdgeWeight;
+    EdgeWeightFormat: EdgeWeightFormat;
+    EdgeDataFormat: EdgeDataFormat;
+    DisplayType: DisplayData;
+    Capacity: int;
+    Demand: int*int list;
+    Depots: int list;
+    EdgeData: int list list
+    EdgeWeights: int list list
+  }

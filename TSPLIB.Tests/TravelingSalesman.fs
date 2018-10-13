@@ -26,7 +26,7 @@ module Tests =
     Assert.Equal(TravelingSalesman, tspProblem.ProblemType)
     Assert.Equal( Euclidian2D, tspProblem.EdgeWeightType)
 
-
+  [<Fact>]
   let ``Can read externally generated TSPLIB file data/data.tsp`` () =
     let tspFile = Path.Combine [|testFolder; "data/data.tsp"|]
     let tspProblem = ReadTspFile tspFile
