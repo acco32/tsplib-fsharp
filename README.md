@@ -1,4 +1,4 @@
-# TSPLIB-fsharp
+# TSPLIB F#
 [![Build Status](https://travis-ci.com/acco32/tsplib-fsharp.svg?branch=master)](https://travis-ci.com/acco32/tsplib-fsharp)
 
 

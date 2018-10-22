@@ -16,6 +16,24 @@ env:
     - DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
     - DOTNET_CLI_TELEMETRY_OPTOUT=1
 
-script:
-  - dotnet build
-  - dotnet test TSPLIB.Tests
+stages:
+  - test
+  - name: publish
+    if: branch = master
+
+jobs:
+  include:
+    - stage: test
+      name: "Build/Test"
+      script:
+        - dotnet test TSPLIB.Tests
+    - stage: publish
+      name: "Submit Nuget Package"
+      os: linux
+      env:
+        - VERSION_NUMBER
+        - NUGET_API_KEY
+      script:
+        - dotnet pack -c Release -o ../build TSPLIB/TSPLIB.fsproj
+        - dotnet nuget push build/* -s https://www.nuget.org -k ${NUGET_API_KEY}
+
