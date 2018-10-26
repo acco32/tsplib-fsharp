@@ -4,32 +4,25 @@ solution: TSPLIB.sln
 dotnet: 2.1.403
 mono: none
 
-matrix:
-  include:
-    - os: linux
-      dist: trusty
-    - os: osx
-      osx_image: xcode9.4
+os:
+  - linux
+  - osx
 
 env:
   global:
     - DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
     - DOTNET_CLI_TELEMETRY_OPTOUT=1
 
-stages:
-  - test
-  - name: publish
-    if: branch = master
+script:
+  - dotnet test TSPLIB.Tests
 
 jobs:
   include:
-    - stage: test
-      name: "Build/Test"
-      script:
-        - dotnet test TSPLIB.Tests
     - stage: publish
       name: "Submit Nuget Package"
+      if: branch = master AND tag =~ /v\d+\.\d+\.\d+/
       os: linux
+      dist: trusty
       env:
         - VERSION_NUMBER
         - NUGET_API_KEY
