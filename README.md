@@ -28,6 +28,18 @@ modelOut |> WriteTspFile output
 
 ```
 
+## Prerequisites
+- dotnet-cli (v2.1+)
+- Fake (v5+)
+
+## Development
+With the prerequisites installed for general development: 
+```shell
+fake run build.fsx -t Dev
+```
+This will clean the environment, compile and run all tests.
+
+
 ## Other DotNet Libraries
 
 https://github.com/pdrozdowski/TSPLib.Net
