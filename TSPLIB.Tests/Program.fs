@@ -1,7 +1,4 @@
-
-namespace TSPLIB.TravelingSalesman
-
-open TSPLIB.TravelingSalesman.Tests
+namespace TSPLIB.Tests
 
 module Program =
   [<EntryPoint>]

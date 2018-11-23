@@ -1,22 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>TSPLIB.Fsharp</AssemblyName>
-    <Version Condition=" '$(TSPLIB_FS_VERSION)' == '' ">0.0.0</Version>
-    <Version Condition=" '$(TSPLIB_FS_VERSION)' != '' ">$(TSPLIB_FS_VERSION)</Version>
     <TargetFramework>netstandard2.0</TargetFramework>
-  </PropertyGroup>
-  <PropertyGroup>
-    <Title>TSPLIB F#</Title>
-    <Authors>Matthew Moore</Authors>
-    <PackageLicenseUrl>https://github.com/acco32/tsplib-fsharp/blob/master/LICENCE.txt</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/acco32/TSPLIB-fsharp</PackageProjectUrl>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Description>Parse/build TSPLIB format files</Description>
-    <Copyright>Copyright 2018</Copyright>
-    <PackageTags>F# TSPLIB</PackageTags>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Types.fs" />
+    <Compile Include="Types.TravelingSalesman.fs" />
+    <Compile Include="Types.VehicleRouting.fs" />
     <Compile Include="TravelingSalesman.fs" />
+    <Compile Include="VehicleRouting.fs" />
   </ItemGroup>
 </Project>

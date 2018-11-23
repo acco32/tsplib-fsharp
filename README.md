@@ -9,6 +9,7 @@ Permits the reading and writing of TSPLIB formats that can be solved by [LKH](ht
 
 ## Supported Problem Types
 - Traveling Salesman
+- Capacitated Vehicle Routing 
 
 ## Example
 Write Traveling Salesman Model to `data.tsp`
@@ -37,7 +38,7 @@ modelOut |> WriteTspFile output
 ## Development
 With the prerequisites installed for general development: 
 ```shell
-fake run build.fsx -t Dev
+fake run build.fsx -t Test
 ```
 This will clean the environment, compile and run all tests.
 

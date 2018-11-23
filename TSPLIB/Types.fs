@@ -50,16 +50,6 @@ module Types =
     | TwoDimension of float * float
     | ThreeDimension of float * float * float
 
-  type Tsp = {
-    Name: string;
-    ProblemType: Problem;
-    Comments: string list;
-    Dimension: int;
-    EdgeWeightType: EdgeWeight;
-    NodeFormat: NodeCoordinateFormat;
-    NodeCoordinates: NodeCoordinate list;
-  }
-
   type EdgeWeightFormat = private EdgeWeightFormat of string
     with
     static member Name (EdgeWeightFormat ewf) = ewf
@@ -91,18 +81,3 @@ module Types =
   let TwoDimensionalDisplay = DisplayData "TWOD_DISPLAY"
   let NoDisplay = DisplayData "NO_DISPLAY"
 
-  type Vrp = {
-    Name: string;
-    ProblemType: Problem;
-    Comments: string list;
-    Dimension: int;
-    EdgeWeightType: EdgeWeight;
-    EdgeWeightFormat: EdgeWeightFormat;
-    EdgeDataFormat: EdgeDataFormat;
-    DisplayType: DisplayData;
-    Capacity: int;
-    Demand: int*int list;
-    Depots: int list;
-    EdgeData: int list list
-    EdgeWeights: int list list
-  }

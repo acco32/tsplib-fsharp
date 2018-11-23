@@ -2,6 +2,7 @@ namespace TSPLIB
 
 open System.IO
 open Types
+open TravelingSalesmanTypes
 open System.Text.RegularExpressions
 
 module TravelingSalesman =

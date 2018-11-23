@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <GenerateProgramFile>false</GenerateProgramFile>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="../TSPLIB/TSPLIB.fsproj">
@@ -15,7 +14,9 @@
     <Content Include="data/a280.tsp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Compile Include="Constants.fs" />
     <Compile Include="TravelingSalesman.fs" />
+    <Compile Include="VehicleRouting.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>

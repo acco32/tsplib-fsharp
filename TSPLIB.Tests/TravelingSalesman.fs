@@ -1,17 +1,14 @@
-﻿namespace TSPLIB.TravelingSalesman
+﻿namespace TSPLIB.Tests
 
+open System
 open System.IO
 open Xunit
 open TSPLIB.Types
+open TSPLIB.TravelingSalesmanTypes
 open TSPLIB.TravelingSalesman
-open System
-open Xunit
+open Constants
 
-module Tests =
-  let testFolder = Environment.CurrentDirectory
-  let testOutputFolder = Path.Combine(Environment.CurrentDirectory, "output")
-  Directory.CreateDirectory(testOutputFolder) |> ignore
-
+module TravelingSalesman =
 
   [<Fact>]
   let ``Can create a default TSP structure`` () =
