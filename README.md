@@ -1,6 +1,8 @@
 # TSPLIB F#
 [![Build Status](https://travis-ci.com/acco32/tsplib-fsharp.svg?branch=master)](https://travis-ci.com/acco32/tsplib-fsharp)
+![Licence](https://img.shields.io/badge/license-MIT-green.svg) 
 
+---
 
 Permits the reading and writing of TSPLIB formats that can be solved by [LKH](http://akira.ruc.dk/~keld/research/LKH-3/) solver.
 
@@ -27,6 +29,18 @@ let modelOut =
 modelOut |> WriteTspFile output 
 
 ```
+
+## Prerequisites
+- dotnet-cli (v2.1+)
+- Fake (v5+)
+
+## Development
+With the prerequisites installed for general development: 
+```shell
+fake run build.fsx -t Dev
+```
+This will clean the environment, compile and run all tests.
+
 
 ## Other DotNet Libraries
 
