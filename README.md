@@ -1,6 +1,8 @@
 # TSPLIB F#
 [![Build Status](https://travis-ci.com/acco32/tsplib-fsharp.svg?branch=master)](https://travis-ci.com/acco32/tsplib-fsharp)
+![Licence](https://img.shields.io/badge/license-MIT-green.svg) 
 
+---
 
 Permits the reading and writing of TSPLIB formats that can be solved by [LKH](http://akira.ruc.dk/~keld/research/LKH-3/) solver.
 
